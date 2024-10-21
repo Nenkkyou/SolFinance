@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Sol Finance</title>
+    <!-- Referência ao Manifesto -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#FF9800">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Estilos Gerais */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #F5F5F5;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        h1 {
+            text-align: center;
+            color: #FF9800;
+            margin-bottom: 20px;
+            font-size: 36px;
+        }
+        form {
+            margin-bottom: 30px;
+            background-color: #FFFFFF;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-size: 20px;
+            color: #333;
+        }
+        input, select {
+            width: 100%;
+            padding: 14px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 18px;
+            box-sizing: border-box;
+            background-color: #fff;
+            color: #333;
+        }
+        input:focus, select:focus {
+            border-color: #FF9800;
+            outline: none;
+            box-shadow: 0 0 5px rgba(255, 152, 0, 0.5);
+        }
+        button {
+            padding: 18px 0;
+            background-color: #FF9800;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 20px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #F57C00;
+        }
+        h2 {
+            font-size: 28px;
+            margin-top: 40px;
+            color: #FF9800;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            table-layout: fixed;
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        table th, table td {
+            border: 1px solid #E0E0E0;
+            padding: 12px;
+            text-align: left;
+            font-size: 16px;
+            word-wrap: break-word;
+        }
+        table th {
+            background-color: #FFE0B2;
+            color: #333;
+        }
+        h3 {
+            font-size: 24px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .export-button {
+            padding: 18px 0;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 20px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        .export-button:hover {
+            background-color: #388E3C;
+        }
+        /* Estilos para botões de ação */
+        .action-button {
+            padding: 8px 12px;
+            margin-right: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #fff;
+        }
+        .edit-button {
+            background-color: #2196F3;
+        }
+        .edit-button:hover {
+            background-color: #1976D2;
+        }
+        .delete-button {
+            background-color: #F44336;
+        }
+        .delete-button:hover {
+            background-color: #D32F2F;
+        }
+        /* Responsividade */
+        @media (max-width: 1080px) {
+            .container {
+                max-width: 90%;
+            }
+            h1 {
+                font-size: 32px;
+            }
+            h2 {
+                font-size: 26px;
+            }
+            h3 {
+                font-size: 22px;
+            }
+            label {
+                font-size: 18px;
+            }
+            input, select {
+                font-size: 16px;
+                padding: 12px;
+            }
+            button {
+                font-size: 18px;
+                padding: 16px 0;
+            }
+            table th, table td {
+                font-size: 14px;
+                padding: 10px;
+            }
+            .export-button {
+                font-size: 18px;
+                padding: 16px 0;
+            }
+        }
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 28px;
+            }
+            h2 {
+                font-size: 24px;
+            }
+            h3 {
+                font-size: 20px;
+            }
+            label {
+                font-size: 16px;
+            }
+            input, select {
+                font-size: 14px;
+                padding: 10px;
+            }
+            button {
+                font-size: 16px;
+                padding: 14px 0;
+            }
+            table th, table td {
+                font-size: 12px;
+                padding: 8px;
+            }
+            .export-button {
+                font-size: 16px;
+                padding: 14px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Sol Finance</h1>
+    <form id="expenseForm">
+        <label for="item">O que você comprou?</label>
+        <input type="text" id="item" name="item" placeholder="Ex: Mercado, Farmácia..." required>
+
+        <label for="amount">Quanto você pagou?</label>
+        <input type="number" id="amount" name="amount" placeholder="Ex: 50.00" step="0.01" min="0" required>
+
+        <label for="date">Data da compra:</label>
+        <input type="date" id="date" name="date" required>
+
+        <button type="submit" id="submitButton">Adicionar Despesa</button>
+    </form>
+
+    <h2>Suas Despesas</h2>
+    <table id="expenseTable">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Valor (R$)</th>
+                <th>Data</th>
+                <th>Ações</th> <!-- Nova coluna para ações -->
+            </tr>
+        </thead>
+        <tbody>
+            <!-- As despesas serão adicionadas aqui -->
+        </tbody>
+    </table>
+
+    <h3>Total: R$ <span id="totalAmount">0.00</span></h3>
+
+    <button class="export-button" onclick="exportTableToCSV('despesas.csv')">Exportar para Excel</button>
+</div>
+
+<script>
+    // Array para armazenar as despesas
+    let expenses = [];
+
+    // Variável para rastrear o índice da despesa que está sendo editada
+    let currentEditIndex = null;
+
+    // Recupera dados do localStorage ao carregar a página
+    if (localStorage.getItem('expenses')) {
+        expenses = JSON.parse(localStorage.getItem('expenses'));
+        updateExpenseTable();
+    }
+
+    // Função para adicionar ou atualizar uma despesa
+    document.getElementById('expenseForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Obtém os valores do formulário
+        let item = document.getElementById('item').value.trim();
+        let amount = parseFloat(document.getElementById('amount').value);
+        let date = document.getElementById('date').value;
+
+        // Verifica se o valor é um número válido
+        if (isNaN(amount)) {
+            alert('Por favor, insira um valor válido.');
+            return;
+        }
+
+        if (currentEditIndex === null) {
+            // Cria um novo objeto de despesa
+            let expense = {
+                item: item,
+                amount: amount,
+                date: date
+            };
+
+            // Adiciona ao array
+            expenses.push(expense);
+        } else {
+            // Atualiza a despesa existente
+            expenses[currentEditIndex] = {
+                item: item,
+                amount: amount,
+                date: date
+            };
+            currentEditIndex = null;
+            document.getElementById('submitButton').textContent = 'Adicionar Despesa';
+        }
+
+        // Salva no localStorage
+        localStorage.setItem('expenses', JSON.stringify(expenses));
+
+        // Atualiza a tabela
+        updateExpenseTable();
+
+        // Limpa o formulário
+        document.getElementById('expenseForm').reset();
+    });
+
+    // Função para atualizar a tabela de despesas
+    function updateExpenseTable() {
+        let tableBody = document.querySelector('#expenseTable tbody');
+        tableBody.innerHTML = '';
+        let total = 0;
+
+        expenses.forEach(function(expense, index) {
+            let row = document.createElement('tr');
+
+            let cellItem = document.createElement('td');
+            cellItem.textContent = expense.item;
+            row.appendChild(cellItem);
+
+            let cellAmount = document.createElement('td');
+            cellAmount.textContent = expense.amount.toFixed(2);
+            row.appendChild(cellAmount);
+
+            let cellDate = document.createElement('td');
+            cellDate.textContent = formatDate(expense.date);
+            row.appendChild(cellDate);
+
+            // Célula para ações (Editar e Excluir)
+            let cellActions = document.createElement('td');
+
+            // Botão Editar
+            let editButton = document.createElement('button');
+            editButton.textContent = 'Editar';
+            editButton.classList.add('action-button', 'edit-button');
+            editButton.setAttribute('data-index', index);
+            editButton.addEventListener('click', editExpense);
+            cellActions.appendChild(editButton);
+
+            // Botão Excluir
+            let deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Excluir';
+            deleteButton.classList.add('action-button', 'delete-button');
+            deleteButton.setAttribute('data-index', index);
+            deleteButton.addEventListener('click', deleteExpense);
+            cellActions.appendChild(deleteButton);
+
+            row.appendChild(cellActions);
+
+            tableBody.appendChild(row);
+
+            total += expense.amount;
+        });
+
+        document.getElementById('totalAmount').textContent = total.toFixed(2);
+    }
+
+    // Função para formatar datas
+    function formatDate(dateString) {
+        let date = new Date(dateString);
+        if (isNaN(date)) return '';
+        let day = String(date.getDate()).padStart(2, '0');
+        let month = String(date.getMonth() + 1).padStart(2, '0');
+        let year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    }
+
+    // Função para excluir uma despesa
+    function deleteExpense(event) {
+        let index = event.target.getAttribute('data-index');
+        if (index === null) return;
+
+        if (confirm('Tem certeza de que deseja excluir esta despesa?')) {
+            expenses.splice(index, 1);
+            localStorage.setItem('expenses', JSON.stringify(expenses));
+            updateExpenseTable();
+        }
+    }
+
+    // Função para editar uma despesa
+    function editExpense(event) {
+        let index = event.target.getAttribute('data-index');
+        if (index === null) return;
+
+        let expense = expenses[index];
+        if (!expense) return;
+
+        // Preenche o formulário com os dados da despesa selecionada
+        document.getElementById('item').value = expense.item;
+        document.getElementById('amount').value = expense.amount;
+        document.getElementById('date').value = expense.date;
+
+        // Atualiza o estado para edição
+        currentEditIndex = index;
+        document.getElementById('submitButton').textContent = 'Atualizar Despesa';
+    }
+
+    // Função para exportar dados para CSV
+    function exportTableToCSV(filename) {
+        let csv = [];
+        let rows = document.querySelectorAll('#expenseTable tr');
+
+        for (let i = 0; i < rows.length; i++) {
+            let row = [], cols = rows[i].querySelectorAll('td, th');
+
+            for (let j = 0; j < cols.length; j++)
+                row.push('"' + cols[j].innerText + '"');
+
+            csv.push(row.join(','));
+        }
+
+        // Adicionar total ao final do CSV
+        csv.push(['', '', '', '']); // Linha em branco
+        csv.push(['"Total"', '"' + document.getElementById('totalAmount').textContent + '"', '', '']);
+
+        // Baixa o arquivo CSV
+        downloadCSV(csv.join('\n'), filename);
+    }
+
+    function downloadCSV(csv, filename) {
+        let csvFile;
+        let downloadLink;
+
+        // Arquivo CSV
+        csvFile = new Blob([csv], {type: 'text/csv'});
+
+        // Link para download
+        downloadLink = document.createElement('a');
+
+        // Nome do arquivo
+        downloadLink.download = filename;
+
+        // Cria um link para o arquivo
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+
+        // Oculta o link
+        downloadLink.style.display = 'none';
+
+        // Adiciona o link ao DOM
+        document.body.appendChild(downloadLink);
+
+        // Clica no link para baixar
+        downloadLink.click();
+
+        // Remove o link do DOM
+        document.body.removeChild(downloadLink);
+    }
+
+    // Registrar o Service Worker
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('sw.js').then(function(registration) {
+                console.log('Service Worker registrado com sucesso:', registration);
+            }).catch(function(error) {
+                console.log('Falha ao registrar o Service Worker:', error);
+            });
+        });
+    }
+</script>
+
+</body>
+</html>
