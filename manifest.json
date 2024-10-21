@@ -1,0 +1,26 @@
+{
+  "name": "Sol Finance",
+  "short_name": "Sol Finance",
+  "description": "Um aplicativo para gerenciar despesas de forma simples e eficiente.",
+  "id": "/",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#F5F5F5",
+  "theme_color": "#FF9800",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  }
+}
